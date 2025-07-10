@@ -1,5 +1,5 @@
 // Ganti IP atau URL dengan milik ESP32 kamu
-const espIp = "http://192.168.21.311"; // ← Ganti ini
+const espIp = "http://192.168.31.211"; // ← Ganti ini
 
 document.getElementById("onBtn").addEventListener("click", () => {
   fetch(`${espIp}/led/on`)
