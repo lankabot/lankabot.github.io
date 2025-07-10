@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kontrol LED ESP32</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kontrol LED ESP32 via MQTT (HTTP)</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-  <h1>Kontrol LED ESP32</h1>
-  <button id="onBtn">HIDUPKAN LED</button>
-  <button id="offBtn">MATIKAN LED</button>
+  <h2>Kontrol LED ESP32</h2>
+  <button onclick="kirim('ON')">LED ON</button>
+  <button onclick="kirim('OFF')">LED OFF</button>
 
-  <script src="script.js"></script>
+  <script>
+    // Tanpa HTTPS: gunakan ws:// (bukan wss://)
+    const client = mqtt.connect("ws://test.mosquitto.org:8080/mqtt");
+
+    client.on("connect", () => {
+      console.log("Terhubung ke MQTT broker.");
+    });
+
+    function kirim(pesan) {
+      client.publish("esp32/led/control", pesan);
+      console.log("Dikirim:", pesan);
+    }
+  </script>
 </body>
 </html>
+
